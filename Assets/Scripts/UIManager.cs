@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     public Button grid2x3Button;
     public Button grid4x4Button;
     public Button grid5x6Button;
+    public Button quitButton;
 
     [Header("GameUIButtons")]
     public Button HomeButton;
@@ -45,6 +46,7 @@ public class UIManager : MonoBehaviour
         HomeButton.onClick.AddListener(() => OnHomeButtonClicked());
         retryButton.onClick.AddListener(() => OnRetryButtonClicked());
         retryButtonCompletedUI.onClick.AddListener(() => OnRetryButtonClicked());
+        quitButton.onClick.AddListener(() => OnQuitPressed());
     }
 
     void Update2X2GridLayout()
@@ -117,5 +119,10 @@ public class UIManager : MonoBehaviour
         totalMatchesTxt.text = "Matches : " + matches+" / "+ (gridX * gridY) / 2;
         totalTurnTxt.text = "Turns : " + turns;
         totalTurnCompletedUI.text = totalTurnTxt.text;
+    }
+
+    void OnQuitPressed()
+    {
+        Application.Quit();
     }
 }
