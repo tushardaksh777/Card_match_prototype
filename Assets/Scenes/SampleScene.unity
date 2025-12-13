@@ -6434,6 +6434,7 @@ MonoBehaviour:
   grid5x6Button: {fileID: 946995198}
   HomeButton: {fileID: 1911255534}
   retryButton: {fileID: 872442524}
+  retryButtonCompletedUI: {fileID: 1875034826}
   totalMatchesTxt: {fileID: 1171957371}
   totalTurnTxt: {fileID: 1966599182}
   totalTurnCompletedUI: {fileID: 1625750434}
@@ -7184,6 +7185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa34d67ffe5174f4790c2eb7228dc130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetMatches: 0
 --- !u!4 &2088632134
 Transform:
   m_ObjectHideFlags: 0

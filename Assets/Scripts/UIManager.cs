@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
     [Header("GameUIButtons")]
     public Button HomeButton;
     public Button retryButton;
+    public Button retryButtonCompletedUI;
 
     [Header("Scores")]
     public TextMeshProUGUI totalMatchesTxt;
@@ -41,6 +42,9 @@ public class UIManager : MonoBehaviour
         grid2x3Button.onClick.AddListener(() => Update2X3GridLayout());
         grid4x4Button.onClick.AddListener(() => Update4X4GridLayout());
         grid5x6Button.onClick.AddListener(() => Update5X6GridLayout());
+        HomeButton.onClick.AddListener(() => OnHomeButtonClicked());
+        retryButton.onClick.AddListener(() => OnRetryButtonClicked());
+        retryButtonCompletedUI.onClick.AddListener(() => OnRetryButtonClicked());
     }
 
     void Update2X2GridLayout()
@@ -88,6 +92,7 @@ public class UIManager : MonoBehaviour
     void OnHomeButtonClicked()
     {
         SwitchToHomeUI();
+        GameManager.Instance.onRestartGame.Invoke();
     }
     void OnGameCompleted()
     {
@@ -98,11 +103,12 @@ public class UIManager : MonoBehaviour
     {
         completedUI.SetActive(false);
         GameManager.Instance.onRestartGame.Invoke();
+        GameManager.Instance.onGameStarted.Invoke(gridX, gridY);
     }
 
     public void UpdateScore(int turns , int matches)
     {
-        totalMatchesTxt.text = "Matches : " + matches+" / "+ (gridX * gridY);
+        totalMatchesTxt.text = "Matches : " + matches+" / "+ (gridX * gridY) / 2;
         totalTurnTxt.text = "Turns : " + turns;
         totalTurnCompletedUI.text = totalTurnTxt.text;
     }

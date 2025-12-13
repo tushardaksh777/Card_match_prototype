@@ -45,6 +45,13 @@ public class CardView : MonoBehaviour
     {
         GameManager.Instance.onCardSelected(this);
     }
+    public void ResetObject()
+    {
+        Color white = Color.white;
+        white.a = 1f;
+        realImage.color = white;
+        cardButton.interactable = true;
+    }
     public void DisableObject()
     {
         Color white = Color.white;

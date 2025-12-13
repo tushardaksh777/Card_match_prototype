@@ -18,9 +18,12 @@ public class GridManager : MonoBehaviour
     public int maxgridSize = 6;
     public float minScaleoffset = 0.25f;
 
+    private List<CardView> totalSpawnedCards = new List<CardView>();
+
     private void Awake()
     {
         GameManager.Instance.onGameStarted += ArrangeGridSize;
+        GameManager.Instance.onRestartGame += ResetOnRestart;
     }
 
     public void ArrangeGridSize(int x , int y)
@@ -52,7 +55,9 @@ public class GridManager : MonoBehaviour
                 card.transform.SetParent(gridContent.transform, false);
                 card.transform.localScale = Vector3.one;
                 card.gameObject.SetActive(true);
+                card.ResetObject();
                 card.WaitForFake(1.5f);
+                totalSpawnedCards.Add(card);
             }
         }
     }
@@ -68,18 +73,18 @@ public class GridManager : MonoBehaviour
 
         for (int i = 0; i < uniquePair; i++)
         {
-            uniqueIds.Add(genrateRandomIds(uniqueIds));
+            uniqueIds.Add(GenrateRandomIds(uniqueIds));
         }
 
         return uniqueIds;
     }
 
-    protected int genrateRandomIds(List<int> ids)
+    protected int GenrateRandomIds(List<int> ids)
     {
         int id = Random.Range(0, cardManager.cardViews.Count);
         if (ids.Contains(id) && ids.Count < cardManager.cardViews.Count)
         {
-            return genrateRandomIds(ids);
+            return GenrateRandomIds(ids);
         }
         return id;
     }
@@ -94,6 +99,15 @@ public class GridManager : MonoBehaviour
             int value = list[k];
             list[k] = list[n];
             list[n] = value;
+        }
+    }
+
+    protected void ResetOnRestart()
+    {
+        for (int i = totalSpawnedCards.Count - 1; i >= 0; i--)
+        {
+            cardManager.ReturnToThePool(totalSpawnedCards[i], totalSpawnedCards[i].cardId);
+            totalSpawnedCards.RemoveAt(i);
         }
     }
 }

@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
 	private void StartTheGame(int x, int y)
 	{
         targetMatches = (x * y) / 2;
-        updateScores.Invoke(totalTurns, totalMatches);
+		UpdateScore();
     }
 
 	public void CardSelected(CardView cardView)
@@ -92,9 +92,9 @@ public class GameManager : MonoBehaviour
 			totalTurns++;
         }
 
-		updateScores.Invoke(totalTurns, totalMatches);
+		UpdateScore();
 
-		if(totalMatches == targetMatches)
+        if (totalMatches == targetMatches)
 		{
 			onGameEnded.Invoke();
         }
@@ -102,8 +102,11 @@ public class GameManager : MonoBehaviour
     
 	protected void RestartTheGame()
 	{
-
-	}
+		totalTurns = 0;
+		totalMatches = 0;
+		selectedCards = new List<CardView>();
+		UpdateScore();
+    }
     protected void GameEnded()
 	{
 
@@ -113,4 +116,9 @@ public class GameManager : MonoBehaviour
 	{
 		return selectedCards;
 	}
+
+	public void UpdateScore()
+	{
+        updateScores.Invoke(totalTurns, totalMatches);
+    }
 }

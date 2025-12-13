@@ -47,4 +47,10 @@ public class CardManager : MonoBehaviour
         }
     }
 
+    public void ReturnToThePool(CardView card , int cardId)
+    {
+        card.gameObject.SetActive(false);
+        card.transform.SetParent(pool.transform, false);
+        cards[cardId].Add(card.gameObject);
+    }
 }
