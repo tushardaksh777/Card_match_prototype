@@ -20,14 +20,14 @@ public class GameManager : MonoBehaviour
 	}
 	void Start()
 	{
-		if(Instance != null)
+		if (Instance != null)
 		{
 			Instance = null;
 		}
 		Instance = this;
 	}
 
-	private void StartTheGame(int x , int y)
+	private void StartTheGame(int x, int y)
 	{
 
 	}
@@ -37,32 +37,42 @@ public class GameManager : MonoBehaviour
 		if (selectedCards.Count == 0)
 		{
 			selectedCards.Add(cardView);
+			cardView.FlipToReal();
 		}
 		else
 		{
-			if (selectedCards[selectedCards.Count - 1].cardId == cardView.cardId)
-			{
-				//Card matched
-				selectedCards.Add(cardView);
-
-				for (int i = 0; i < selectedCards.Count; i++)
-				{
-					selectedCards[i].gameObject.SetActive(false);
-				}
-				selectedCards = new List<CardView>();
-			}
-			else
-			{
-				//Card not matched
-				for (int i = 0; i < selectedCards.Count; i++)
-				{
-					selectedCards[i].FlipToFake();
-				}
-				cardView.FlipToFake();
-				selectedCards = new List<CardView>();
-			}
+			StartCoroutine(CheckForMatch(cardView));
 		}
 	}
+
+	IEnumerator CheckForMatch(CardView cardView)
+	{
+		if (selectedCards[selectedCards.Count - 1].cardId == cardView.cardId)
+		{
+			//Card matched
+			selectedCards.Add(cardView);
+			cardView.FlipToReal();
+			yield return new WaitForSeconds(1f);
+
+			for (int i = 0; i < selectedCards.Count; i++)
+			{
+				selectedCards[i].DisableObject();
+			}
+			selectedCards = new List<CardView>();
+		}
+		else
+		{
+			//Card not matched
+			yield return new WaitForSeconds(1f);
+			for (int i = 0; i < selectedCards.Count; i++)
+			{
+				selectedCards[i].FlipToFake();
+			}
+			cardView.FlipToFake();
+			selectedCards = new List<CardView>();
+		}
+	}
+    
 
 	public List<CardView> GetSelectedCards()
 	{

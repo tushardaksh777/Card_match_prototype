@@ -45,4 +45,8 @@ public class CardView : MonoBehaviour
         FlipToReal();
         GameManager.Instance.onCardSelected(this);
     }
+    public void DisableObject()
+    {
+        cardButton.interactable = false;
+    }
 }

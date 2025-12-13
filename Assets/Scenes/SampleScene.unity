@@ -464,7 +464,7 @@ MonoBehaviour:
   cardObject: {fileID: 229473972}
   cardId: 4
   animator: {fileID: 229473975}
-  carButton: {fileID: 229473976}
+  cardButton: {fileID: 229473976}
 --- !u!95 &229473975
 Animator:
   serializedVersion: 5
@@ -916,7 +916,7 @@ MonoBehaviour:
   cardObject: {fileID: 312904985}
   cardId: 3
   animator: {fileID: 312904988}
-  carButton: {fileID: 312904989}
+  cardButton: {fileID: 312904989}
 --- !u!95 &312904988
 Animator:
   serializedVersion: 5
@@ -2522,7 +2522,7 @@ MonoBehaviour:
   cardObject: {fileID: 982949497}
   cardId: 7
   animator: {fileID: 982949500}
-  carButton: {fileID: 982949501}
+  cardButton: {fileID: 982949501}
 --- !u!95 &982949500
 Animator:
   serializedVersion: 5
@@ -3343,7 +3343,7 @@ MonoBehaviour:
   cardObject: {fileID: 1392951565}
   cardId: 0
   animator: {fileID: 1392951567}
-  carButton: {fileID: 1392951569}
+  cardButton: {fileID: 1392951569}
 --- !u!114 &1392951569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3597,7 +3597,7 @@ MonoBehaviour:
   cardObject: {fileID: 1526142491}
   cardId: 6
   animator: {fileID: 1526142494}
-  carButton: {fileID: 1526142495}
+  cardButton: {fileID: 1526142495}
 --- !u!95 &1526142494
 Animator:
   serializedVersion: 5
@@ -3719,7 +3719,7 @@ MonoBehaviour:
   cardObject: {fileID: 1579722248}
   cardId: 2
   animator: {fileID: 1579722251}
-  carButton: {fileID: 1579722252}
+  cardButton: {fileID: 1579722252}
 --- !u!95 &1579722251
 Animator:
   serializedVersion: 5
@@ -3878,7 +3878,7 @@ MonoBehaviour:
   cardObject: {fileID: 1581034159}
   cardId: 5
   animator: {fileID: 1581034162}
-  carButton: {fileID: 1581034163}
+  cardButton: {fileID: 1581034163}
 --- !u!95 &1581034162
 Animator:
   serializedVersion: 5
@@ -4541,7 +4541,7 @@ MonoBehaviour:
   cardObject: {fileID: 1739016975}
   cardId: 1
   animator: {fileID: 1739016978}
-  carButton: {fileID: 1739016979}
+  cardButton: {fileID: 1739016979}
 --- !u!95 &1739016978
 Animator:
   serializedVersion: 5
