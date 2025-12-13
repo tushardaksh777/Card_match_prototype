@@ -5,12 +5,11 @@ using UnityEngine;
 public class CardManager : MonoBehaviour
 {
     public GameObject pool;
-
     public List<CardView> cardViews = new List<CardView>();
 
     private Dictionary<int , List<GameObject>> cards = new Dictionary<int, List<GameObject>>();
     public int cardBuffer = 6;
-    // Start is called before the first frame update
+
     void Start()
     {
         StartPooling();
@@ -37,6 +36,8 @@ public class CardManager : MonoBehaviour
 
         if(cardList.Count > 0)
         {
+            GameObject cardObj = cardList[0];
+            cards[id].RemoveAt(0);
             return cardList[0].GetComponent<CardView>();
         }
         else

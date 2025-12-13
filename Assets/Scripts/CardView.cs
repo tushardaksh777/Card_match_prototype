@@ -1,14 +1,48 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CardView : MonoBehaviour
 {
     public GameObject cardObject;
     public int cardId = 0;
 
-    void Start()
+    public Animator animator;
+    public Button cardButton;
+
+    private void Awake()
     {
-        
+        cardButton.onClick.AddListener(()=> OnCardClicked());
+    }
+
+    public void FlipToReal()
+    {
+        animator.SetTrigger("FlipToReal");
+        cardButton.interactable = false;
+    }
+    public void FlipToFake()
+    {
+        animator.SetTrigger("FlipToFake");
+        cardButton.interactable = true;
+    }
+
+    public void WaitForFake(float duration)
+    {
+        FlipToReal();
+        StartCoroutine(FlipToFakeWithDuration(duration));
+    }
+
+    IEnumerator FlipToFakeWithDuration(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        FlipToFake();
+
+    }
+    protected void OnCardClicked()
+    {
+        FlipToReal();
+        GameManager.Instance.onCardSelected(this);
     }
 }
