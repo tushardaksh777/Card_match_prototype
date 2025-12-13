@@ -1,28 +1,46 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    public Button grid2x2;
-    public Button grid2x3;
-    public Button grid4x4;
-    public Button grid5x6;
+    [Header("HomeUIButtons")]
+    public Button grid2x2Button;
+    public Button grid2x3Button;
+    public Button grid4x4Button;
+    public Button grid5x6Button;
+
+    [Header("GameUIButtons")]
+    public Button HomeButton;
+    public Button retryButton;
+
+    [Header("Scores")]
+    public TextMeshProUGUI totalMatchesTxt;
+    public TextMeshProUGUI totalTurnTxt;
+    public TextMeshProUGUI totalTurnCompletedUI;
 
     private int gridX = 0;
     private int gridY = 0;
 
+    [Header("UI_Window")]
     public GameObject homeUI;
     public GameObject gameUI;
+    public GameObject completedUI;
 
+    private void Awake()
+    {
+        GameManager.Instance.updateScores += UpdateScore;
+        GameManager.Instance.onGameEnded += OnGameCompleted;
+    }
 
     void Start()
     {
-        grid2x2.onClick.AddListener(() => Update2X2GridLayout());
-        grid2x3.onClick.AddListener(() => Update2X3GridLayout());
-        grid4x4.onClick.AddListener(() => Update4X4GridLayout());
-        grid5x6.onClick.AddListener(() => Update5X6GridLayout());
+        grid2x2Button.onClick.AddListener(() => Update2X2GridLayout());
+        grid2x3Button.onClick.AddListener(() => Update2X3GridLayout());
+        grid4x4Button.onClick.AddListener(() => Update4X4GridLayout());
+        grid5x6Button.onClick.AddListener(() => Update5X6GridLayout());
     }
 
     void Update2X2GridLayout()
@@ -30,7 +48,7 @@ public class UIManager : MonoBehaviour
         gridX = 2;
         gridY = 2;
         SwitchToGameUI();
-        GameManager.Instance.OnGameStarted.Invoke(gridX, gridY);
+        GameManager.Instance.onGameStarted.Invoke(gridX, gridY);
     }
 
     void Update2X3GridLayout()
@@ -38,21 +56,21 @@ public class UIManager : MonoBehaviour
         gridX = 2;
         gridY = 3;
         SwitchToGameUI();
-        GameManager.Instance.OnGameStarted.Invoke(gridX, gridY);
+        GameManager.Instance.onGameStarted.Invoke(gridX, gridY);
     }
     void Update4X4GridLayout()
     {
         gridX = 4;
         gridY = 4;
         SwitchToGameUI();
-        GameManager.Instance.OnGameStarted.Invoke(gridX, gridY);
+        GameManager.Instance.onGameStarted.Invoke(gridX, gridY);
     }
     void Update5X6GridLayout()
     {
         gridX = 5;
         gridY = 6;
         SwitchToGameUI();
-        GameManager.Instance.OnGameStarted.Invoke(gridX, gridY);
+        GameManager.Instance.onGameStarted.Invoke(gridX, gridY);
     }
 
     protected void SwitchToGameUI()
@@ -60,9 +78,32 @@ public class UIManager : MonoBehaviour
         gameUI.SetActive(true);
         homeUI.SetActive(false);
     }
+
     protected void SwitchToHomeUI()
     {
         homeUI.SetActive(true);
         gameUI.SetActive(false);
+    }
+
+    void OnHomeButtonClicked()
+    {
+        SwitchToHomeUI();
+    }
+    void OnGameCompleted()
+    {
+        completedUI.SetActive(true);
+    }
+
+    void OnRetryButtonClicked()
+    {
+        completedUI.SetActive(false);
+        GameManager.Instance.onRestartGame.Invoke();
+    }
+
+    public void UpdateScore(int turns , int matches)
+    {
+        totalMatchesTxt.text = "Matches : " + matches+" / "+ (gridX * gridY);
+        totalTurnTxt.text = "Turns : " + turns;
+        totalTurnCompletedUI.text = totalTurnTxt.text;
     }
 }

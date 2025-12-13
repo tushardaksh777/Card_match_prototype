@@ -38,11 +38,11 @@ public class CardManager : MonoBehaviour
         {
             GameObject cardObj = cardList[0];
             cards[id].RemoveAt(0);
-            return cardList[0].GetComponent<CardView>();
+            return cardObj.GetComponent<CardView>();
         }
         else
         {
-            Debug.LogError("No more Cards available");
+            Debug.LogWarning("No more Cards available Increase buffer size");
             return null;
         }
     }

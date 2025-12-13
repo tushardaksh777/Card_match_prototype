@@ -7,33 +7,46 @@ public class GameManager : MonoBehaviour
 {
 	public static GameManager Instance;
 
-	public Action<int, int> OnGameStarted;
+	public Action<int, int> onGameStarted;
 	public Action<CardView> onCardSelected;
+	public Action onRestartGame;
 	public Action cardsGotMatched;
+	public Action<int, int> updateScores;
+    public Action onGameEnded;
 
-	List<CardView> selectedCards = new List<CardView>();
+    List<CardView> selectedCards = new List<CardView>();
+
+	bool isCheckingMatching = false;
+	private int totalMatches = 0;
+	private int totalTurns = 0;
+
+	public int targetMatches = 0;
 
 	private void Awake()
 	{
-		OnGameStarted += StartTheGame;
+        if (Instance != null)
+        {
+            Instance = null;
+        }
+        Instance = this;
+
+        onGameStarted += StartTheGame;
 		onCardSelected += CardSelected;
-	}
-	void Start()
-	{
-		if (Instance != null)
-		{
-			Instance = null;
-		}
-		Instance = this;
-	}
+		onRestartGame += RestartTheGame;
+		onGameEnded += GameEnded;
+    }
 
 	private void StartTheGame(int x, int y)
 	{
-
-	}
+        targetMatches = (x * y) / 2;
+        updateScores.Invoke(totalTurns, totalMatches);
+    }
 
 	public void CardSelected(CardView cardView)
 	{
+		if (isCheckingMatching)
+			return;
+
 		if (selectedCards.Count == 0)
 		{
 			selectedCards.Add(cardView);
@@ -41,6 +54,7 @@ public class GameManager : MonoBehaviour
 		}
 		else
 		{
+			isCheckingMatching = true;
 			StartCoroutine(CheckForMatch(cardView));
 		}
 	}
@@ -58,23 +72,44 @@ public class GameManager : MonoBehaviour
 			{
 				selectedCards[i].DisableObject();
 			}
+			totalMatches++;
+			totalTurns++;
 			selectedCards = new List<CardView>();
+			isCheckingMatching = false;
 		}
 		else
 		{
-			//Card not matched
-			yield return new WaitForSeconds(1f);
+            //Card not matched
+            cardView.FlipToReal();
+            yield return new WaitForSeconds(1f);
 			for (int i = 0; i < selectedCards.Count; i++)
 			{
 				selectedCards[i].FlipToFake();
 			}
 			cardView.FlipToFake();
 			selectedCards = new List<CardView>();
-		}
+            isCheckingMatching = false;
+			totalTurns++;
+        }
+
+		updateScores.Invoke(totalTurns, totalMatches);
+
+		if(totalMatches == targetMatches)
+		{
+			onGameEnded.Invoke();
+        }
 	}
     
+	protected void RestartTheGame()
+	{
 
-	public List<CardView> GetSelectedCards()
+	}
+    protected void GameEnded()
+	{
+
+	}
+
+    public List<CardView> GetSelectedCards()
 	{
 		return selectedCards;
 	}

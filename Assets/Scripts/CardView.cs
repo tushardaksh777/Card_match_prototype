@@ -8,6 +8,7 @@ public class CardView : MonoBehaviour
 {
     public GameObject cardObject;
     public int cardId = 0;
+    public Image realImage;
 
     public Animator animator;
     public Button cardButton;
@@ -42,11 +43,13 @@ public class CardView : MonoBehaviour
     }
     protected void OnCardClicked()
     {
-        FlipToReal();
         GameManager.Instance.onCardSelected(this);
     }
     public void DisableObject()
     {
+        Color white = Color.white;
+        white.a = 0.5f;
+        realImage.color = white;
         cardButton.interactable = false;
     }
 }

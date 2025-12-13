@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Xml;
 using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +12,7 @@ public class GridManager : MonoBehaviour
     public GridLayoutGroup gridLayout;
 
     public int gridx = 0;
-    public int gridy =4;
+    public int gridy = 4;
 
     public int minOffsetSize = 140;
     public int maxgridSize = 6;
@@ -19,7 +20,7 @@ public class GridManager : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.Instance.OnGameStarted += ArrangeGridSize;
+        GameManager.Instance.onGameStarted += ArrangeGridSize;
     }
 
     public void ArrangeGridSize(int x , int y)
@@ -60,7 +61,7 @@ public class GridManager : MonoBehaviour
     {
         if(uniquePair > cardManager.cardViews.Count)
         {
-            Debug.LogError("Cards can be repeat as you have low count");
+            Debug.LogWarning("Cards can be repeat as you have low count");
         }
         
         List<int> uniqueIds = new List<int>();
@@ -76,7 +77,7 @@ public class GridManager : MonoBehaviour
     protected int genrateRandomIds(List<int> ids)
     {
         int id = Random.Range(0, cardManager.cardViews.Count);
-        if (ids.Contains(id))
+        if (ids.Contains(id) && ids.Count < cardManager.cardViews.Count)
         {
             return genrateRandomIds(ids);
         }
