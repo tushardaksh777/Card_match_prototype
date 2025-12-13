@@ -32,6 +32,7 @@ public class CardView : MonoBehaviour
     public void WaitForFake(float duration)
     {
         FlipToReal();
+        AudioManager.Instance.PlayCardFlipFx();
         StartCoroutine(FlipToFakeWithDuration(duration));
     }
 
@@ -43,6 +44,7 @@ public class CardView : MonoBehaviour
     }
     protected void OnCardClicked()
     {
+        AudioManager.Instance.PlayCardFlipFx();
         GameManager.Instance.onCardSelected(this);
     }
     public void ResetObject()

@@ -51,6 +51,7 @@ public class UIManager : MonoBehaviour
     {
         gridX = 2;
         gridY = 2;
+        AudioManager.Instance.PlayButtonFx();
         SwitchToGameUI();
         GameManager.Instance.onGameStarted.Invoke(gridX, gridY);
     }
@@ -59,6 +60,7 @@ public class UIManager : MonoBehaviour
     {
         gridX = 2;
         gridY = 3;
+        AudioManager.Instance.PlayButtonFx();
         SwitchToGameUI();
         GameManager.Instance.onGameStarted.Invoke(gridX, gridY);
     }
@@ -66,6 +68,7 @@ public class UIManager : MonoBehaviour
     {
         gridX = 4;
         gridY = 4;
+        AudioManager.Instance.PlayButtonFx();
         SwitchToGameUI();
         GameManager.Instance.onGameStarted.Invoke(gridX, gridY);
     }
@@ -73,6 +76,7 @@ public class UIManager : MonoBehaviour
     {
         gridX = 5;
         gridY = 6;
+        AudioManager.Instance.PlayButtonFx();
         SwitchToGameUI();
         GameManager.Instance.onGameStarted.Invoke(gridX, gridY);
     }
@@ -91,6 +95,7 @@ public class UIManager : MonoBehaviour
 
     void OnHomeButtonClicked()
     {
+        AudioManager.Instance.PlayButtonFx();
         SwitchToHomeUI();
         GameManager.Instance.onRestartGame.Invoke();
     }
@@ -101,6 +106,7 @@ public class UIManager : MonoBehaviour
 
     void OnRetryButtonClicked()
     {
+        AudioManager.Instance.PlayButtonFx();
         completedUI.SetActive(false);
         GameManager.Instance.onRestartGame.Invoke();
         GameManager.Instance.onGameStarted.Invoke(gridX, gridY);
