@@ -1,9 +1,6 @@
 using System.Collections.Generic;
-using System.Xml;
-using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class GridManager : MonoBehaviour
 {
