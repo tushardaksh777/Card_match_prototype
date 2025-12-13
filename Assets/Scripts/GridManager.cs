@@ -40,22 +40,28 @@ public class GridManager : MonoBehaviour
         int totalCardsCount = x * y;
         int totalCardsInOneGroup = 2;
         int cardPair = totalCardsCount / totalCardsInOneGroup;
-        List<int> uniqueCards = GenrateUniqueIds(cardPair);
+        List<int> uniqueIds = GenrateUniqueIds(cardPair);
+
         
-        Shuffle(uniqueCards);
+        List<int> finalCardIds = new List<int>();
+
+        for (int i = 0; i < uniqueIds.Count; i++)
+        {
+            finalCardIds.Add(uniqueIds[i]);
+            finalCardIds.Add(uniqueIds[i]);
+        }
+
+        List<int> uniqueCards = Shuffle(finalCardIds);
         
         for (int i = 0; i < uniqueCards.Count; i++)
         {
-            for (int j = 0; j < totalCardsInOneGroup; j++)
-            {
-                CardView card = cardManager.GetCardById(uniqueCards[i]);
-                card.transform.SetParent(gridContent.transform, false);
-                card.transform.localScale = Vector3.one;
-                card.gameObject.SetActive(true);
-                card.ResetObject();
-                card.WaitForFake(1.5f);
-                totalSpawnedCards.Add(card);
-            }
+            CardView card = cardManager.GetCardById(uniqueCards[i]);
+            card.transform.SetParent(gridContent.transform, false);
+            card.transform.localScale = Vector3.one;
+            card.gameObject.SetActive(true);
+            card.ResetObject();
+            card.WaitForFake(1.5f);
+            totalSpawnedCards.Add(card);
         }
     }
 
@@ -86,7 +92,7 @@ public class GridManager : MonoBehaviour
         return id;
     }
 
-    public void Shuffle(List<int> list)
+    public List<int> Shuffle(List<int> list)
     {
         int n = list.Count;
         while (n > 1)
@@ -97,6 +103,7 @@ public class GridManager : MonoBehaviour
             list[k] = list[n];
             list[n] = value;
         }
+        return list;
     }
 
     protected void ResetOnRestart()
